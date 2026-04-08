@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Início</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      image-rendering: pixelated;
+    }
+
+    :root {
+      --bg: #111111;
+      --surface: #1c1c1c;
+      --text-primary: #ffffff;
+      --text-secondary: #aaaaaa;
+      --accent: #ff2244;
+      --border-light: #444444;
+      --border-dark: #000000;
+      --scanline: rgba(255, 255, 255, 0.02);
+    }
+
+    body {
+      background-color: #000;
+      color: var(--text-primary);
+      font-family: 'Press Start 2P', monospace;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        var(--scanline) 0px,
+        var(--scanline) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      pointer-events: none;
+      z-index: 999;
+    }
+
+    /* ── Wallpaper ── */
+    .wallpaper {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    /* Sky gradient */
+    .wallpaper-sky {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        #08001a 0%,
+        #150030 28%,
+        #3a0060 50%,
+        #9b006e 62%,
+        #ff2060 68%,
+        #ff5020 73%,
+        #ff7010 76%
+      );
+    }
+
+    /* Stars */
+    .wallpaper-stars {
+      position: absolute;
+      inset: 0 0 30% 0;
+    }
+
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 0; /* pixel stars */
+      animation: twinkle var(--d, 3s) ease-in-out infinite;
+      animation-delay: var(--delay, 0s);
+    }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.15; }
+    }
+
+    /* Retrowave sun */
+    .wallpaper-sun {
+      position: absolute;
+      width: 220px;
+      height: 110px;
+      left: 50%;
+      bottom: 30%;
+      transform: translateX(-50%);
+      background: linear-gradient(to bottom, #ff00cc, #ff2060 40%, #ff6010);
+      border-radius: 220px 220px 0 0;
+      overflow: hidden;
+    }
+
+    .wallpaper-sun::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent   0px,
+        transparent   10px,
+        #08001a       10px,
+        #08001a       14px,
+        transparent   14px,
+        transparent   22px,
+        #08001a       22px,
+        #08001a       25px,
+        transparent   25px,
+        transparent   31px,
+        #08001a       31px,
+        #08001a       33px,
+        transparent   33px,
+        transparent   38px,
+        #08001a       38px,
+        #08001a       40px,
+        transparent   40px,
+        transparent   44px,
+        #08001a       44px,
+        #08001a       46px
+      );
+    }
+
+    /* Horizon glow */
+    .wallpaper-glow {
+      position: absolute;
+      bottom: 30%;
+      left: 0; right: 0;
+      height: 60px;
+      background: radial-gradient(ellipse 60% 100% at 50% 100%, rgba(255,80,20,0.6), transparent);
+    }
+
+    /* Ground */
+    .wallpaper-ground {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 30%;
+      background: #08001a;
+    }
+
+    /* Perspective grid */
+    .wallpaper-grid-wrap {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 30%;
+      overflow: hidden;
+    }
+
+    .wallpaper-grid {
+      position: absolute;
+      width: 300%;
+      height: 400%;
+      left: -100%;
+      top: 0;
+      background-image:
+        linear-gradient(to right,  rgba(255, 0, 200, 0.55) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 0, 200, 0.55) 1px, transparent 1px);
+      background-size: 80px 80px;
+      transform: perspective(300px) rotateX(72deg);
+      transform-origin: top center;
+      animation: gridMove 1.5s linear infinite;
+    }
+
+    @keyframes gridMove {
+      from { background-position: 0 0; }
+      to   { background-position: 0 80px; }
+    }
+
+    /* Fade grid into horizon */
+    .wallpaper-grid-wrap::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 40%;
+      background: linear-gradient(to bottom, #08001a, transparent);
+      pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      z-index: 10;
+    }
+
+    .pixel-box {
+      border-style: solid;
+      border-width: 4px;
+      border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+      box-shadow:
+        inset -2px -2px 0 var(--border-dark),
+        inset 2px 2px 0 var(--border-light);
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem;
+      width: 100%;
+      max-width: 760px;
+    }
+
+    .panel {
+      background: rgba(18, 0, 28, 0.82);
+      backdrop-filter: blur(2px);
+      padding: 2rem 2.5rem 2.5rem;
+      display: inline-block;
+      width: 100%;
+    }
+
+    .titlebar {
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 0.5rem;
+      letter-spacing: 0.1em;
+      padding: 6px 10px;
+      text-align: left;
+      margin-bottom: 2rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .titlebar-dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .titlebar-dots span {
+      display: inline-block;
+      width: 8px;
+      height: 8px;
+      background: rgba(255,255,255,0.5);
+    }
+
+    .titlebar-title {
+      flex: 1;
+      text-align: center;
+    }
+
+    .greeting {
+      font-size: 0.45rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+    }
+
+    .clock {
+      font-size: 3.2rem;
+      color: var(--text-primary);
+      line-height: 1;
+      margin-bottom: 0.8rem;
+      text-shadow: 2px 2px 0px #ff2244, 4px 4px 0px #000000;
+    }
+
+    .date {
+      font-size: 0.42rem;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.08em;
+    }
+
+    .divider {
+      height: 4px;
+      background: var(--border-dark);
+      margin-bottom: 2.5rem;
+      box-shadow: 0 2px 0 var(--border-light);
+    }
+
+    .shortcuts-label {
+      font-size: 0.38rem;
+      color: #ff2244;
+      letter-spacing: 0.15em;
+      margin-bottom: 1.2rem;
+    }
+
+    .shortcuts {
+      display: flex;
+      gap: 0.9rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .shortcut {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      padding: 0.9rem 1rem;
+      background: var(--surface);
+      cursor: pointer;
+      min-width: 76px;
+      position: relative;
+      transition: top 0.05s;
+      top: 0;
+    }
+
+    .shortcut:hover {
+      top: 3px;
+      box-shadow:
+        inset -2px -2px 0 var(--border-light),
+        inset 2px 2px 0 var(--border-dark) !important;
+    }
+
+    .shortcut:hover span {
+      color: #ff2244;
+    }
+
+    .shortcut img {
+      width: 28px;
+      height: 28px;
+      image-rendering: pixelated;
+    }
+
+    .shortcut span {
+      font-size: 0.38rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+    }
+
+    .quote-block {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      max-width: 420px;
+      z-index: 50;
+      padding: 0.8rem 1rem;
+      border-left: 4px solid #ff2244;
+      background: rgba(18, 0, 28, 0.75);
+      backdrop-filter: blur(4px);
+    }
+
+    .quote-text {
+      font-size: 0.52rem;
+      color: var(--text-primary);
+      line-height: 2;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+    }
+
+    .quote-author {
+      font-size: 0.44rem;
+      color: #ff2244;
+      letter-spacing: 0.1em;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .blink {
+      animation: blink 1s step-end infinite;
+    }
+
+    /* Floating player window */
+    .player-window {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 320px;
+      z-index: 100;
+      border-style: solid;
+      border-width: 4px;
+      border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+      box-shadow:
+        inset -2px -2px 0 var(--border-dark),
+        inset 2px 2px 0 var(--border-light),
+        6px 6px 0 #000000;
+    }
+
+    .player-titlebar {
+      background: var(--accent);
+      color: #ffffff;
+      font-size: 0.4rem;
+      letter-spacing: 0.08em;
+      padding: 6px 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: grab;
+      user-select: none;
+    }
+
+    .player-titlebar:active {
+      cursor: grabbing;
+    }
+
+    .player-titlebar-title {
+      flex: 1;
+    }
+
+    .player-minimize {
+      width: 16px;
+      height: 16px;
+      background: #1c1c1c;
+      border-style: solid;
+      border-width: 2px;
+      border-color: #ffffff #888888 #888888 #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      font-size: 0.5rem;
+      line-height: 1;
+      padding-bottom: 3px;
+    }
+
+    .player-minimize:hover {
+      background: #444444;
+    }
+
+    .player-minimize:active {
+      border-color: #888888 #ffffff #ffffff #888888;
+    }
+
+    .player-body {
+      overflow: hidden;
+      transition: height 0.15s ease;
+      height: 180px;
+      background: #000;
+    }
+
+    .player-body.minimized {
+      height: 0;
+    }
+
+    .player-body iframe {
+      width: 100%;
+      height: 180px;
+      border: none;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Daily quote (top-left corner) -->
+  <div class="quote-block">
+    <div class="quote-text" id="quoteText"></div>
+    <div class="quote-author" id="quoteAuthor"></div>
+  </div>
+
+  <!-- Wallpaper -->
+  <div class="wallpaper">
+    <div class="wallpaper-sky"></div>
+    <div class="wallpaper-stars" id="stars"></div>
+    <div class="wallpaper-sun"></div>
+    <div class="wallpaper-glow"></div>
+    <div class="wallpaper-ground"></div>
+    <div class="wallpaper-grid-wrap">
+      <div class="wallpaper-grid"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="panel pixel-box">
+
+      <div class="titlebar">
+        <div class="titlebar-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="titlebar-title">DISRAELI.EXE</div>
+      </div>
+
+      <div class="greeting" id="greeting">INICIANDO...</div>
+      <div class="clock" id="clock">00<span class="blink">:</span>00</div>
+      <div class="date" id="date">—</div>
+
+      <div class="divider"></div>
+      <div class="shortcuts-label">&gt; PROGRAMAS</div>
+
+      <div class="shortcuts">
+        <a class="shortcut pixel-box" href="https://youtube.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=youtube.com&sz=64" alt="YouTube" />
+          <span>YOUTUBE</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://music.youtube.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=music.youtube.com&sz=64" alt="YT Music" />
+          <span>YT MUSIC</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://github.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=github.com&sz=64" alt="GitHub" />
+          <span>GITHUB</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://mail.google.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=mail.google.com&sz=64" alt="Gmail" />
+          <span>GMAIL</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://chatgpt.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=chatgpt.com&sz=64" alt="ChatGPT" />
+          <span>CHATGPT</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://claude.ai" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=claude.ai&sz=64" alt="Claude" />
+          <span>CLAUDE</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://makerworld.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=makerworld.com&sz=64" alt="MakerWorld" />
+          <span>MAKERWORLD</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://web.whatsapp.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=web.whatsapp.com&sz=64" alt="WhatsApp" />
+          <span>WHATSAPP</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://instagram.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=instagram.com&sz=64" alt="Instagram" />
+          <span>INSTAGRAM</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://lends.com.br/admin/ludopata" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=lends.com.br&sz=64" alt="Lends" />
+          <span>LENDS</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://canva.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=canva.com&sz=64" alt="Canva" />
+          <span>CANVA</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://classroom.google.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=classroom.google.com&sz=64" alt="Classroom" />
+          <span>CLASSROOM</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Floating player -->
+  <div class="player-window" id="playerWindow">
+    <div class="player-titlebar" id="playerTitlebar">
+      <span class="player-titlebar-title">♪ YT MUSIC.EXE</span>
+      <div class="player-minimize" id="playerMinimize">_</div>
+    </div>
+    <div class="player-body" id="playerBody">
+      <iframe
+        src="https://www.youtube.com/embed/videoseries?list=OLAK5uy_kdaJObzoQvDk__8C0kNxpJB0VifNz8GVo&autoplay=1"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+
+  <script>
+    const DAYS   = ['DOMINGO','SEGUNDA','TERCA','QUARTA','QUINTA','SEXTA','SABADO'];
+    const MONTHS = ['JAN','FEV','MAR','ABR','MAI','JUN','JUL','AGO','SET','OUT','NOV','DEZ'];
+
+    function pad(n) { return String(n).padStart(2, '0'); }
+
+    function getGreeting(h) {
+      if (h >= 6  && h < 12)   return '> BOM DIA, DISRAELI_';
+      if (h >= 12 && h < 17.5) return '> BOA TARDE, DISRAELI_';
+      return '> BOA NOITE, DISRAELI_';
+    }
+
+    function update() {
+      const now = new Date();
+      const h   = now.getHours();
+      const m   = now.getMinutes();
+
+      document.getElementById('clock').innerHTML =
+        `${pad(h)}<span class="blink">:</span>${pad(m)}`;
+
+      document.getElementById('greeting').textContent = getGreeting(h + m / 60);
+
+      const day  = DAYS[now.getDay()];
+      const date = now.getDate();
+      const mon  = MONTHS[now.getMonth()];
+      const yr   = now.getFullYear();
+      document.getElementById('date').textContent = `${day}  ${pad(date)}/${mon}/${yr}`;
+    }
+
+    update();
+    setInterval(update, 1000);
+
+    // Daily quotes
+    const QUOTES = [
+      { text: "O homem está condenado a ser livre.", author: "— Jean-Paul Sartre" },
+      { text: "Aquele que tem um porquê para viver suporta quase qualquer como.", author: "— Friedrich Nietzsche" },
+      { text: "Não há nada permanente exceto a mudança.", author: "— Heráclito" },
+      { text: "O forte não é aquele que nunca cai, mas aquele que se levanta todas as vezes.", author: "— Confúcio" },
+      { text: "É mais fácil enganar as pessoas do que convencê-las de que foram enganadas.", author: "— Mark Twain" },
+      { text: "O homem que move montanhas começa carregando pequenas pedras.", author: "— Confúcio" },
+      { text: "A maioria dos homens leva vidas de desespero silencioso.", author: "— Henry David Thoreau" },
+      { text: "Conhece-te a ti mesmo.", author: "— Sócrates" },
+      { text: "O que não me destrói, me fortalece.", author: "— Friedrich Nietzsche" },
+      { text: "Os fins justificam os meios.", author: "— Nicolau Maquiavel" },
+      { text: "A vida não examinada não vale a pena ser vivida.", author: "— Sócrates" },
+      { text: "Deus está morto. E nós o matamos.", author: "— Friedrich Nietzsche" },
+      { text: "A ignorância é a noite da mente, uma noite sem lua e sem estrelas.", author: "— Confúcio" },
+      { text: "O homem é a medida de todas as coisas.", author: "— Protágoras" },
+      { text: "Prefiro morrer de pé a viver de joelhos.", author: "— Emiliano Zapata" },
+      { text: "Se você conhece o inimigo e conhece a si mesmo, não precisa temer o resultado de cem batalhas.", author: "— Sun Tzu" },
+      { text: "A suprema excelência é submeter o inimigo sem lutar.", author: "— Sun Tzu" },
+      { text: "Toda a sabedoria humana se resume em duas palavras: esperar e esperançar.", author: "— Alexandre Dumas" },
+      { text: "O homem é um lobo para o homem.", author: "— Thomas Hobbes" },
+      { text: "Felicidade não é algo pronto. Ela vem de suas próprias ações.", author: "— Dalai Lama" },
+      { text: "Agir sem pensar é atirar sem mirar.", author: "— Edmund Burke" },
+      { text: "O silêncio é o sono que alimenta a sabedoria.", author: "— Francis Bacon" },
+      { text: "Só sei que nada sei.", author: "— Sócrates" },
+      { text: "A crueldade não é fraqueza; a misericórdia mal aplicada é.", author: "— Nicolau Maquiavel" },
+      { text: "Não chores porque acabou, sorri porque aconteceu.", author: "— Gabriel García Márquez" },
+      { text: "O tempo é o único capital de quem só tem inteligência como fortuna.", author: "— Honoré de Balzac" },
+      { text: "Penso, logo existo.", author: "— René Descartes" },
+      { text: "A liberdade de um acaba onde começa a do outro.", author: "— Immanuel Kant" },
+      { text: "A maior glória não está em nunca cair, mas em se levantar cada vez que se cai.", author: "— Oliver Goldsmith" },
+      { text: "Não tema o homem que praticou dez mil golpes diferentes. Tema o homem que praticou um único golpe dez mil vezes.", author: "— Bruce Lee" },
+      { text: "A ambição é o último refúgio do fracasso.", author: "— Oscar Wilde" },
+      { text: "O universo não nos deve nada. Tudo que conquistamos vem da nossa força de vontade.", author: "— Arthur Schopenhauer" },
+      { text: "Aquele que luta com monstros deve tomar cuidado para não se tornar também um monstro.", author: "— Friedrich Nietzsche" },
+      { text: "Não existe acaso; existe apenas a necessidade que ainda não foi compreendida.", author: "— Marie Curie" },
+      { text: "A verdadeira medida de um homem é o que ele faz quando ninguém está olhando.", author: "— John Wooden" },
+      { text: "A dor é inevitável. O sofrimento é opcional.", author: "— Buda" },
+      { text: "Seja a mudança que você quer ver no mundo.", author: "— Mahatma Gandhi" },
+      { text: "O coração tem razões que a própria razão desconhece.", author: "— Blaise Pascal" },
+    ];
+
+    function getDailyQuote() {
+      const now   = new Date();
+      const start = new Date(now.getFullYear(), 0, 0);
+      const day   = Math.floor((now - start) / 86400000);
+      return QUOTES[day % QUOTES.length];
+    }
+
+    const q = getDailyQuote();
+    document.getElementById('quoteText').textContent   = `"${q.text}"`;
+    document.getElementById('quoteAuthor').textContent = q.author;
+
+    // Stars
+    const starsEl = document.getElementById('stars');
+    for (let i = 0; i < 120; i++) {
+      const s = document.createElement('div');
+      s.className = 'star';
+      const size = Math.random() < 0.7 ? 1 : 2;
+      s.style.cssText = `
+        width:${size}px; height:${size}px;
+        left:${Math.random()*100}%;
+        top:${Math.random()*100}%;
+        --d:${(2 + Math.random()*4).toFixed(1)}s;
+        --delay:-${(Math.random()*4).toFixed(1)}s;
+      `;
+      starsEl.appendChild(s);
+    }
+
+    // Minimize
+    const playerBody     = document.getElementById('playerBody');
+    const playerMinimize = document.getElementById('playerMinimize');
+    let minimized = false;
+
+    playerMinimize.addEventListener('click', () => {
+      minimized = !minimized;
+      playerBody.classList.toggle('minimized', minimized);
+      playerMinimize.textContent = minimized ? '□' : '_';
+    });
+
+    // Drag
+    const playerWindow   = document.getElementById('playerWindow');
+    const playerTitlebar = document.getElementById('playerTitlebar');
+    let dragging = false, ox = 0, oy = 0;
+
+    playerTitlebar.addEventListener('mousedown', e => {
+      if (e.target === playerMinimize) return;
+      dragging = true;
+      const rect = playerWindow.getBoundingClientRect();
+      ox = e.clientX - rect.left;
+      oy = e.clientY - rect.top;
+      playerWindow.style.right = 'unset';
+      playerWindow.style.bottom = 'unset';
+      playerWindow.style.left = rect.left + 'px';
+      playerWindow.style.top  = rect.top  + 'px';
+    });
+
+    document.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      playerWindow.style.left = (e.clientX - ox) + 'px';
+      playerWindow.style.top  = (e.clientY - oy) + 'px';
+    });
+
+    document.addEventListener('mouseup', () => { dragging = false; });
+
+  </script>
+</body>
+</html>
