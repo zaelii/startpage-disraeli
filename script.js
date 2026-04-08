@@ -99,38 +99,3 @@ for (let i = 0; i < 120; i++) {
   starsEl.appendChild(s);
 }
 
-// ── Player: Minimize ──
-const playerBody     = document.getElementById('playerBody');
-const playerMinimize = document.getElementById('playerMinimize');
-let minimized = false;
-
-playerMinimize.addEventListener('click', () => {
-  minimized = !minimized;
-  playerBody.classList.toggle('minimized', minimized);
-  playerMinimize.textContent = minimized ? '□' : '_';
-});
-
-// ── Player: Drag ──
-const playerWindow   = document.getElementById('playerWindow');
-const playerTitlebar = document.getElementById('playerTitlebar');
-let dragging = false, ox = 0, oy = 0;
-
-playerTitlebar.addEventListener('mousedown', e => {
-  if (e.target === playerMinimize) return;
-  dragging = true;
-  const rect = playerWindow.getBoundingClientRect();
-  ox = e.clientX - rect.left;
-  oy = e.clientY - rect.top;
-  playerWindow.style.right  = 'unset';
-  playerWindow.style.bottom = 'unset';
-  playerWindow.style.left   = rect.left + 'px';
-  playerWindow.style.top    = rect.top  + 'px';
-});
-
-document.addEventListener('mousemove', e => {
-  if (!dragging) return;
-  playerWindow.style.left = (e.clientX - ox) + 'px';
-  playerWindow.style.top  = (e.clientY - oy) + 'px';
-});
-
-document.addEventListener('mouseup', () => { dragging = false; });

@@ -183,7 +183,7 @@ body::after {
   text-align: center;
   padding: 2rem;
   width: 100%;
-  max-width: 760px;
+  max-width: 500px;
 }
 
 .pixel-box {
@@ -254,7 +254,6 @@ body::after {
 .date {
   font-size: 0.42rem;
   color: var(--text-secondary);
-  margin-bottom: 2.5rem;
   letter-spacing: 0.08em;
 }
 
@@ -266,45 +265,80 @@ body::after {
   animation: blink 1s step-end infinite;
 }
 
-/* ── Shortcuts ── */
-.divider {
-  height: 4px;
-  background: var(--border-dark);
-  margin-bottom: 2.5rem;
-  box-shadow: 0 2px 0 var(--border-light);
-}
-
-.shortcuts-label {
-  font-size: 0.38rem;
-  color: #ff2244;
-  letter-spacing: 0.15em;
-  margin-bottom: 1.2rem;
-}
-
-.shortcuts {
-  display: flex;
-  gap: 0.9rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.shortcut {
+/* ── Sidebar (shortcuts) ── */
+.sidebar {
+  position: fixed;
+  top: 50%;
+  right: 20px;
+  transform: translateY(-50%);
+  z-index: 50;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.6rem;
+  background: rgba(18, 0, 28, 0.75);
+  backdrop-filter: blur(4px);
+  padding: 1rem 0.6rem;
+  border-left: 4px solid #ff2244;
+  border-right: none;
+  border-style: solid;
+  border-width: 4px;
+  border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
+  box-shadow:
+    inset -2px -2px 0 var(--border-dark),
+    inset 2px 2px 0 var(--border-light);
+}
+
+.sidebar-label {
+  font-size: 0.3rem;
+  color: #ff2244;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.4rem;
+}
+
+.category {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.category-label {
+  font-size: 0.36rem;
+  color: #ff2244;
+  letter-spacing: 0.15em;
+  margin-bottom: 0.2rem;
+  opacity: 0.8;
+}
+
+.category-divider {
+  height: 2px;
+  background: var(--border-dark);
+  box-shadow: 0 1px 0 var(--border-light);
+  margin: 0.3rem 0;
+}
+
+.shortcuts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.shortcut {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.6rem;
   text-decoration: none;
-  padding: 0.9rem 1rem;
+  padding: 0.5rem 0.7rem;
   background: var(--surface);
   cursor: pointer;
-  min-width: 76px;
   position: relative;
   transition: top 0.05s;
   top: 0;
 }
 
 .shortcut:hover {
-  top: 3px;
+  top: 2px;
   box-shadow:
     inset -2px -2px 0 var(--border-light),
     inset 2px 2px 0 var(--border-dark) !important;
@@ -315,13 +349,14 @@ body::after {
 }
 
 .shortcut img {
-  width: 28px;
-  height: 28px;
+  width: 20px;
+  height: 20px;
   image-rendering: pixelated;
+  flex-shrink: 0;
 }
 
 .shortcut span {
-  font-size: 0.38rem;
+  font-size: 0.4rem;
   color: var(--text-secondary);
   letter-spacing: 0.05em;
   white-space: nowrap;
@@ -352,84 +387,4 @@ body::after {
   font-size: 0.44rem;
   color: #ff2244;
   letter-spacing: 0.1em;
-}
-
-/* ── Floating Player ── */
-.player-window {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  width: 320px;
-  z-index: 100;
-  border-style: solid;
-  border-width: 4px;
-  border-color: var(--border-light) var(--border-dark) var(--border-dark) var(--border-light);
-  box-shadow:
-    inset -2px -2px 0 var(--border-dark),
-    inset 2px 2px 0 var(--border-light),
-    6px 6px 0 #000000;
-}
-
-.player-titlebar {
-  background: var(--accent);
-  color: #ffffff;
-  font-size: 0.4rem;
-  letter-spacing: 0.08em;
-  padding: 6px 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  cursor: grab;
-  user-select: none;
-}
-
-.player-titlebar:active {
-  cursor: grabbing;
-}
-
-.player-titlebar-title {
-  flex: 1;
-}
-
-.player-minimize {
-  width: 16px;
-  height: 16px;
-  background: #1c1c1c;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #ffffff #888888 #888888 #ffffff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  flex-shrink: 0;
-  font-size: 0.5rem;
-  line-height: 1;
-  padding-bottom: 3px;
-}
-
-.player-minimize:hover {
-  background: #444444;
-}
-
-.player-minimize:active {
-  border-color: #888888 #ffffff #ffffff #888888;
-}
-
-.player-body {
-  overflow: hidden;
-  transition: height 0.15s ease;
-  height: 180px;
-  background: #000;
-}
-
-.player-body.minimized {
-  height: 0;
-}
-
-.player-body iframe {
-  width: 100%;
-  height: 180px;
-  border: none;
-  display: block;
 }
