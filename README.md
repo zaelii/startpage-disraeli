@@ -1,41 +1,41 @@
-# DISRAELI.EXE — Custom Browser Start Page
+# DISRAELI.EXE — Página Inicial Personalizada do Navegador
 
-A personal browser start page with a synthwave/retrowave aesthetic, pixel art style, and daily philosopher quotes.
+Página inicial pessoal para o navegador com estética synthwave/retrowave, visual pixel art e frases diárias de filósofos.
 
-## Features
+## Funcionalidades
 
-- **Live clock & date** in Portuguese, with contextual greeting (Bom dia / Boa tarde / Boa noite)
-- **Synthwave wallpaper** — animated perspective grid, retrowave sun, twinkling stars
-- **Daily philosopher quotes** — rotates every day, inspired by the tone of *Classroom of the Elite*
-- **App shortcuts** — YouTube, YT Music, GitHub, Gmail, ChatGPT, Claude, MakerWorld, WhatsApp, Instagram, Lends, Canva, Google Classroom
-- **Floating YouTube Music player** — draggable, minimizable Win95-style window
-- **Pixel art aesthetic** — Press Start 2P font, Win95 pixel borders, CRT scanline overlay
-- **Pure dark mode** — no dependencies, single HTML file
+- **Relógio e data ao vivo** em português, com saudação contextual (Bom dia / Boa tarde / Boa noite)
+- **Wallpaper synthwave** — grid animado em perspectiva, sol retrowave, estrelas piscando
+- **Frases diárias de filósofos** — rotaciona a cada dia, inspirado no tom de *Classroom of the Elite*
+- **Atalhos de apps** — YouTube, YT Music, GitHub, Gmail, ChatGPT, Claude, MakerWorld, WhatsApp, Instagram, Lends, Canva, Google Classroom
+- **Player flutuante de música** — janela estilo Win95, arrastável e minimizável
+- **Estética pixel art** — fonte Press Start 2P, bordas pixel Win95, overlay de scanlines CRT
+- **Modo escuro puro** — sem dependências externas
 
 ## Preview
 
-> Synthwave sky · animated grid floor · pixel UI panel · floating music player
+> Céu synthwave · grid animado no chão · painel pixel · player de música flutuante
 
-## Setup
+## Configuração
 
-1. Download `startpage.html`
-2. In **Brave** (or any Chromium browser): go to `Settings → On startup → Open a specific page`
-3. Add the local file path, e.g.: `file:///C:/Users/YourName/Documents/Coding/startpage.html`
+1. Baixe os arquivos `index.html`, `style.css` e `script.js`
+2. No **Brave** (ou qualquer navegador Chromium): vá em `Configurações → Ao iniciar → Abrir uma página específica`
+3. Adicione o caminho local do arquivo, ex.: `file:///C:/Users/SeuNome/Documents/Coding/index.html`
 
-## Customization
+## Personalização
 
-All customization is done directly in the HTML file:
+Toda a personalização é feita diretamente nos arquivos:
 
-| What | Where |
+| O quê | Onde |
 |---|---|
-| Music playlist | `src` attribute of the `<iframe>` inside `.player-body` |
-| App shortcuts | `.shortcuts` div — add/remove `<a class="shortcut pixel-box">` blocks |
-| Quotes | `QUOTES` array in the `<script>` section |
-| Your name | `getGreeting()` function and `.titlebar-title` text |
-| Colors | `:root` CSS variables at the top of `<style>` |
+| Playlist de música | Atributo `src` do `<iframe>` dentro de `.player-body` em `index.html` |
+| Atalhos de apps | Div `.shortcuts` — adicione/remova blocos `<a class="shortcut pixel-box">` em `index.html` |
+| Frases | Array `QUOTES` em `script.js` |
+| Seu nome | Função `getGreeting()` e texto `.titlebar-title` em `script.js` e `index.html` |
+| Cores | Variáveis CSS `:root` no topo de `style.css` |
 
 ## Stack
 
-- HTML / CSS / Vanilla JS — no frameworks, no dependencies
+- HTML / CSS / Vanilla JS — sem frameworks, sem dependências
 - [Press Start 2P](https://fonts.google.com/specimen/Press+Start+2P) — Google Fonts
-- YouTube embed API for the music player
+- YouTube embed API para o player de música
