@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Início</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Daily quote (top-left corner) -->
+  <div class="quote-block">
+    <div class="quote-text" id="quoteText"></div>
+    <div class="quote-author" id="quoteAuthor"></div>
+  </div>
+
+  <!-- Wallpaper -->
+  <div class="wallpaper">
+    <div class="wallpaper-sky"></div>
+    <div class="wallpaper-stars" id="stars"></div>
+    <div class="wallpaper-sun"></div>
+    <div class="wallpaper-glow"></div>
+    <div class="wallpaper-ground"></div>
+    <div class="wallpaper-grid-wrap">
+      <div class="wallpaper-grid"></div>
+    </div>
+  </div>
+
+  <!-- Main panel -->
+  <div class="container">
+    <div class="panel pixel-box">
+
+      <div class="titlebar">
+        <div class="titlebar-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="titlebar-title">DISRAELI.EXE</div>
+      </div>
+
+      <div class="greeting" id="greeting">INICIANDO...</div>
+      <div class="clock" id="clock">00<span class="blink">:</span>00</div>
+      <div class="date" id="date">—</div>
+
+      <div class="divider"></div>
+      <div class="shortcuts-label">&gt; PROGRAMAS</div>
+
+      <div class="shortcuts">
+        <a class="shortcut pixel-box" href="https://youtube.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=youtube.com&sz=64" alt="YouTube" />
+          <span>YOUTUBE</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://music.youtube.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=music.youtube.com&sz=64" alt="YT Music" />
+          <span>YT MUSIC</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://github.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=github.com&sz=64" alt="GitHub" />
+          <span>GITHUB</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://mail.google.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=mail.google.com&sz=64" alt="Gmail" />
+          <span>GMAIL</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://chatgpt.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=chatgpt.com&sz=64" alt="ChatGPT" />
+          <span>CHATGPT</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://claude.ai" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=claude.ai&sz=64" alt="Claude" />
+          <span>CLAUDE</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://makerworld.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=makerworld.com&sz=64" alt="MakerWorld" />
+          <span>MAKERWORLD</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://web.whatsapp.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=web.whatsapp.com&sz=64" alt="WhatsApp" />
+          <span>WHATSAPP</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://instagram.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=instagram.com&sz=64" alt="Instagram" />
+          <span>INSTAGRAM</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://lends.com.br/admin/ludopata" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=lends.com.br&sz=64" alt="Lends" />
+          <span>LENDS</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://canva.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=canva.com&sz=64" alt="Canva" />
+          <span>CANVA</span>
+        </a>
+        <a class="shortcut pixel-box" href="https://classroom.google.com" target="_blank" rel="noopener">
+          <img src="https://www.google.com/s2/favicons?domain=classroom.google.com&sz=64" alt="Classroom" />
+          <span>CLASSROOM</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Floating player -->
+  <div class="player-window" id="playerWindow">
+    <div class="player-titlebar" id="playerTitlebar">
+      <span class="player-titlebar-title">♪ YT MUSIC.EXE</span>
+      <div class="player-minimize" id="playerMinimize">_</div>
+    </div>
+    <div class="player-body" id="playerBody">
+      <iframe
+        src="https://www.youtube.com/embed/videoseries?list=OLAK5uy_kdaJObzoQvDk__8C0kNxpJB0VifNz8GVo&autoplay=1"
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+        loading="lazy"
+        allowfullscreen
+      ></iframe>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
