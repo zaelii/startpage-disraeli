@@ -83,19 +83,20 @@ const q = getDailyQuote();
 document.getElementById('quoteText').textContent   = `"${q.text}"`;
 document.getElementById('quoteAuthor').textContent = q.author;
 
-// ── Stars ──
-const starsEl = document.getElementById('stars');
-for (let i = 0; i < 120; i++) {
-  const s = document.createElement('div');
-  s.className = 'star';
-  const size = Math.random() < 0.7 ? 1 : 2;
-  s.style.cssText = `
-    width:${size}px; height:${size}px;
-    left:${Math.random()*100}%;
-    top:${Math.random()*100}%;
-    --d:${(2 + Math.random()*4).toFixed(1)}s;
-    --delay:-${(Math.random()*4).toFixed(1)}s;
+// ── Petals ──
+const petalsEl = document.getElementById('petals');
+for (let i = 0; i < 45; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  const size = (5 + Math.random() * 7).toFixed(0);
+  p.style.cssText = `
+    left: ${Math.random() * 100}%;
+    --size: ${size}px;
+    --drift: ${(Math.random() * 260 - 130).toFixed(0)}px;
+    --duration: ${(10 + Math.random() * 14).toFixed(1)}s;
+    --delay: -${(Math.random() * 18).toFixed(1)}s;
+    --rotate: ${(Math.random() * 360).toFixed(0)}deg;
   `;
-  starsEl.appendChild(s);
+  petalsEl.appendChild(p);
 }
 
